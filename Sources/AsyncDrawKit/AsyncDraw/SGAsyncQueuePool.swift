@@ -13,9 +13,7 @@ final class SGAsyncQueuePool {
     
     private lazy var queues: Array<SGAsyncQueue> = { Array<SGAsyncQueue>() }()
     
-    private lazy var maxQueueCount: Int = {
-        ProcessInfo.processInfo.activeProcessorCount > 2 ? ProcessInfo.processInfo.activeProcessorCount : 2
-    }()
+    private lazy var maxQueueCount: Int = { ProcessInfo.processInfo.activeProcessorCount * 2 }()
     
     /**
      Get a serial queue with a balanced rule by `taskCount`.
