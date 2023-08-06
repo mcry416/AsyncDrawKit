@@ -20,6 +20,7 @@ SGAsyncView view class that draw in sub-thread.
 # Attention:
 
 - Do not use it into your project directly!!!
+- It may not perform as well as UIImageView at lower image resolutions.
 - This is demo and no any verify in reality project.
 - Some issues waiting for repair.
 
