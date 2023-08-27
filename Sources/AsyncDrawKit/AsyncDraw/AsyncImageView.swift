@@ -1,9 +1,9 @@
-//
-//  AsyncImageView.swift
-//  Compent
-//
-//  Created by Eldest's MacBook on 2023/5/31.
-//
+/**
+ * Copyright mcry416(mcry416@outlook.com). and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 import UIKit
 import CoreGraphics
@@ -49,7 +49,6 @@ open class AsyncImageView: UIView, SGAsyncDelgate {
         context.scaleBy(x: 1, y: -1)
         
         guard let image = self.image else { return }
-        
         let viewMaxSide: CGFloat = max(size.width, size.height)
         
         // Transfer Image into CFData

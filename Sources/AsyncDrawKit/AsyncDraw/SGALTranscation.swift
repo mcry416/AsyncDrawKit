@@ -1,16 +1,18 @@
-//
-//  SGALTranscation.swift
-//  Compent
-//
-//  Created by Eldest's MacBook on 2023/5/21.
-//
+/**
+ * Copyright mcry416(mcry416@outlook.com). and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 import Foundation
 
+// MARK: - AtomicTask(AtomicMsg)
+
 final fileprivate class AtomicTask: NSObject {
     
-    public var target: NSObject!
-    public var funcPtr: Selector!
+    internal var target: NSObject!
+    internal var funcPtr: Selector!
     
     init(target: NSObject!, funcPtr: Selector!) {
         self.target = target
@@ -23,13 +25,41 @@ final fileprivate class AtomicTask: NSObject {
     
 }
 
-final class SGALTranscation {
+// MARK: - PTheradLock
+
+final fileprivate class PTheradLock {
+    
+    init() {
+        pthread_mutexattr_init(&recursiveMutexAttr)
+        pthread_mutexattr_settype(&recursiveMutexAttr, PTHREAD_MUTEX_RECURSIVE)
+        pthread_mutex_init(&recursiveMutex, &recursiveMutexAttr)
+    }
+    
+    @inline(__always)
+    final func lock() {
+        pthread_mutex_lock(&recursiveMutex)
+    }
+    
+    @inline(__always)
+    final func unlock() {
+        pthread_mutex_unlock(&recursiveMutex)
+    }
+    
+    private var recursiveMutex = pthread_mutex_t()
+    private var recursiveMutexAttr = pthread_mutexattr_t()
+    
+}
+
+
+// MARK: - SGALTranscation
+
+final internal class SGALTranscation {
     
     /** The task that need process in current runloop. */
     private static var tasks: Set<AtomicTask> = { Set<AtomicTask>() }()
     
     /** Create a SGAsyncLayer Transcation task. */
-    public init (target: NSObject, funcPtr: Selector) {
+    internal init (target: NSObject, funcPtr: Selector) {
         SGALTranscation.tasks.insert(AtomicTask(target: target, funcPtr: funcPtr))
     }
     
@@ -54,15 +84,18 @@ final class SGALTranscation {
     
 }
 
+// MARK: - DispatQueue.once
 
 extension DispatchQueue {
     
     private static var _onceTokenDictionary: [String: String] = { [: ] }()
     
+    private static var _dispatch_thread_lock: PTheradLock = { PTheradLock() }()
+    
     /** Execute once safety. */
     static func once(token: String, _ block: (() -> Void)){
-        defer { objc_sync_exit(self) }
-        objc_sync_enter(self)
+        defer { _dispatch_thread_lock.unlock() }
+        _dispatch_thread_lock.lock()
         
         if _onceTokenDictionary[token] != nil {
             return

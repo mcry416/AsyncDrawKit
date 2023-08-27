@@ -1,17 +1,17 @@
-//
-//  SGAsyncQueue.swift
-//  Compent
-//
-//  Created by Eldest's MacBook on 2023/5/25.
-//
+/**
+ * Copyright mcry416(mcry416@outlook.com). and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 import Foundation
 
-final class SGAsyncQueue {
+final internal class SGAsyncQueue {
     
-    public var queue: DispatchQueue = { dispatch_queue_serial_t(label: "com.sg.async_draw.queue", qos: .userInitiated) }()
+    internal var queue: DispatchQueue = { dispatch_queue_serial_t(label: "com.sg.async_draw.queue", qos: .userInitiated) }()
     
-    public var taskCount: Int = 0
+    internal var taskCount: Int = 0
     
-    public var index: Int = 0
+    internal var index: Int = 0
 }

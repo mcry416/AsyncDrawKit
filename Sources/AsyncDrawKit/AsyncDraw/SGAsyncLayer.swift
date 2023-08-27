@@ -1,9 +1,9 @@
-//
-//  SGAsyncLayer.swift
-//  Compent
-//
-//  Created by Eldest's MacBook on 2023/5/21.
-//
+/**
+ * Copyright mcry416(mcry416@outlook.com). and its affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ */
 
 import UIKit
 import CoreGraphics
@@ -12,7 +12,7 @@ import QuartzCore
 /**
  Implements this protocol and override following methods.
  */
-@objc protocol SGAsyncDelgate {
+@objc protocol SGAsyncDelgate: AnyObject {
     
     /**
      Override this method to custome the async view.
@@ -25,7 +25,7 @@ import QuartzCore
     
 }
 
-class SGAsyncLayer: CALayer {
+final public class SGAsyncLayer: CALayer {
     
     /**
      A boolean value that indicate the layer ought to draw in async mode or sync mode. Sync mode is slow to draw in UI-Thread, and async mode is fast in special sub-thread to draw but the memory is bigger than sync mode. Default is `true`.
@@ -35,12 +35,12 @@ class SGAsyncLayer: CALayer {
     /** Current status of operation in current runloop. */
     private var isCancel: Bool = false
     
-    override func setNeedsDisplay() {
+    public override func setNeedsDisplay() {
         self.isCancel = true
         super.setNeedsDisplay()
     }
     
-    override func display() {
+    public override func display() {
         self.isCancel = false
         
         // If the view could responsed the delegate, and executed async draw method.
