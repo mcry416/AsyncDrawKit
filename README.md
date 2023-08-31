@@ -1,4 +1,9 @@
- 
+![](https://img.shields.io/badge/Swift-5.0+-red)
+![](https://img.shields.io/badge/Platform-iOS11+-green)
+![](https://img.shields.io/badge/Swift_Package_Manager-Compatible-blue)
+![](https://img.shields.io/badge/Super%20Fast-FC180A)
+![](https://img.shields.io/badge/Low%20Memory-8A2BE2)
+![](https://img.shields.io/badge/Author:%20mcry416@outlook.com-FF7E30)
  # AsyncDrawKit
 
 SGAsyncView view class that draw in sub-thread.
