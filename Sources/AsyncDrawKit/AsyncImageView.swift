@@ -83,6 +83,7 @@ open class AsyncImageView: UIView, SGAsyncDelgate {
 
 extension AsyncImageView {
     
+    // According to raw file data to decode UIImage.
     private final func decoderImage(_ res: String, layer: CALayer, in context: CGContext, size: CGSize, isCancel cancel: Bool) {
         var path: String?
         if let tempPath = Bundle.main.path(forResource: res, ofType: "jpg") {
@@ -108,6 +109,7 @@ extension AsyncImageView {
         context.draw(imageRef, in: CGRect(origin: .zero, size: size))
     }
     
+    // According to decoded UIImage to draw.
     private final func decoderImage(_ resImage: UIImage?, layer: CALayer, in context: CGContext, size: CGSize, isCancel cancel: Bool) {
         
         guard let image = resImage else { return }

@@ -6,10 +6,18 @@
  */
 
 import UIKit
+import Foundation
 
 extension AsyncImageView {
     
-    private static var sg_asyncImageCaches: AsyncImageViewCache = { AsyncImageViewCache(limitCount: 100) }()
+    private static var sg_lru_cache_limited: UInt64 = 100
+    
+    private static var sg_asyncImageCaches: AsyncImageViewCache = { AsyncImageViewCache(limitCount: sg_lru_cache_limited) }()
+    
+    private var imageNetwork: ImageNetwork? {
+        set { objc_setAssociatedObject(self, &AsyncImageViewAssociatedKeys.imageNetwork, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
+        get { objc_getAssociatedObject(self, &AsyncImageViewAssociatedKeys.imageNetwork) as? ImageNetwork }
+    }
     
     /**
      Set image with an URL sting, provide placeholder and completion callback.
@@ -27,23 +35,28 @@ extension AsyncImageView {
             self.image = placeholderImage
         }
         
-        DispatchQueue.global().async {
-            guard let url = URL(string: urlString) else { return }
-            URLSession.shared.dataTask(with: url) { data, response, error  in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        AsyncImageView.sg_asyncImageCaches.setObject(image, forKey: urlString)
-                        self.image = image
-                        completion?(image)
-                    }
-                } else {
-                    if let error = error {
-                        debugPrint("----> ERROR : \(error)")
-                    }
-                }
-            }.resume()
+        if imageNetwork == nil {
+            imageNetwork = ImageNetwork()
         }
+        
+        guard let url = URL(string: urlString) else { return }
+        imageNetwork?.fetchData(url: url, requestToken: urlString, completionHandler: { (data) in
+            if let tempImage = UIImage(data: data) {
+                AsyncImageView.sg_asyncImageCaches.setObject(tempImage, forKey: urlString)
+                self.image = tempImage
+                completion?(tempImage)
+            }
+        })
         
     }
     
+    func sg_cancelRequest() {
+        imageNetwork?.cancelData()
+    }
+    
+}
+
+private enum AsyncImageViewAssociatedKeys {
+    static var imageNetwork: Bool = true
+    static var imageToken:   Bool = true
 }
