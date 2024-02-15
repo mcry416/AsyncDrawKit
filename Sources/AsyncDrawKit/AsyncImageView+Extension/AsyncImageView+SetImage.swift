@@ -25,7 +25,7 @@ extension AsyncImageView {
      - Parameter placeholder: When the image was not loaded, and show placeholder from local resource.
      - Parameter completion: Image loaded succeed, and execute this callback.
      */
-    func sg_setImage(_ urlString: String, placeholderName placeholder: String? = nil, completion: ((UIImage) -> Void)? = nil) {
+    public func sg_setImage(_ urlString: String, placeholderName placeholder: String? = nil, completion: ((UIImage) -> Void)? = nil) {
         if let cache = AsyncImageView.sg_asyncImageCaches.getObject(forKey: urlString) as? UIImage {
             self.image = cache
             return
@@ -50,7 +50,7 @@ extension AsyncImageView {
         
     }
     
-    func sg_cancelRequest() {
+    public func sg_cancelRequest() {
         imageNetwork?.cancelData()
     }
     

@@ -9,63 +9,63 @@ import UIKit
 
 open class NodeButton: NSObject, NodeLayerDelegate {
     
-    var text: String = ""
+    open var text: String = ""
     
-    var contents: (Any & NSObject)?
+    open var contents: (Any & NSObject)?
     
-    var textColor: UIColor = .black
+    open var textColor: UIColor = .black
     
-    var cornerRadius: CGFloat = 5
+    open var cornerRadius: CGFloat = 5
     
-    var backgroundColor: UIColor = .white
+    open var backgroundColor: UIColor = .white
     
-    var frame: CGRect = .zero
+    open var frame: CGRect = .zero
     
-    var hidden: Bool = false
+    open var hidden: Bool = false
     
-    var alpha: CGFloat = 1.0
+    open var alpha: CGFloat = 1.0
     
-    var superView: NodeLayerDelegate?
+    open var superView: NodeLayerDelegate?
     
-    var paintSignal: Bool = false
+    open var paintSignal: Bool = false
     
     private var didReceiveTapBlock: (() -> Void)?
     
     private var didReceiveClickBlock: (() -> Void)?
     
-    func setOnTapListener(_ listerner: (() -> Void)?) {
+    open func setOnTapListener(_ listerner: (() -> Void)?) {
         didReceiveTapBlock = {
             listerner?()
         }
     }
     
-    func setOnClickListener(_ listerner: (() -> Void)?) {
+    open func setOnClickListener(_ listerner: (() -> Void)?) {
         didReceiveClickBlock = {
             listerner?()
         }
     }
     
-    func didReceiveTapSignal() {
+    open func didReceiveTapSignal() {
         didReceiveTapBlock?()
     }
     
-    func didReceiveClickSignal() {
+    open func didReceiveClickSignal() {
         didReceiveClickBlock?()
     }
     
-    func removeFromSuperView() {
+    open func removeFromSuperView() {
         
     }
     
-    func willLoadToSuperView() {
+    open func willLoadToSuperView() {
         
     }
     
-    func didLoadToSuperView() {
+    open func didLoadToSuperView() {
         
     }
     
-    func setNeedsDisplay() {
+    open func setNeedsDisplay() {
         
     }
     

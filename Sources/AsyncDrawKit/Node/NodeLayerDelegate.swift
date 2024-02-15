@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol NodeLayerDelegate: NSObject {
+public protocol NodeLayerDelegate: NSObject {
     
     var contents: (Any & NSObject)? { set get }
     
@@ -18,6 +18,8 @@ protocol NodeLayerDelegate: NSObject {
     var hidden: Bool { set get }
     
     var alpha: CGFloat { set get }
+    
+    var dynamicTouchInsets: UIEdgeInsets { set get }
     
     var superView: NodeLayerDelegate? { get }
     

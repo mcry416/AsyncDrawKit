@@ -13,7 +13,7 @@ open class NodeRootView: UIView, SGAsyncDelgate {
         SGAsyncLayer.self
     }
     
-    var subNodes: Array<NodeLayerDelegate> = { Array<NodeLayerDelegate>() }()
+    public var subNodes: Array<NodeLayerDelegate> = { Array<NodeLayerDelegate>() }()
     
     open override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         guard let previousTraitCollection = previousTraitCollection else { return }
@@ -33,13 +33,13 @@ extension NodeRootView {
         self.layer.setNeedsDisplay()
     }
     
-    func addSubNode(_ node: NodeLayerDelegate) {
+    public func addSubNode(_ node: NodeLayerDelegate) {
         node.willLoadToSuperView()
         self.subNodes.append(node)
         SGALTranscation(target: self, funcPtr: #selector(drawTask)).commit()
     }
     
-    func asyncDraw(layer: CALayer, in context: CGContext, size: CGSize, isCancel cancel: Bool) {
+    public func asyncDraw(layer: CALayer, in context: CGContext, size: CGSize, isCancel cancel: Bool) {
         if cancel {
             return
         }
