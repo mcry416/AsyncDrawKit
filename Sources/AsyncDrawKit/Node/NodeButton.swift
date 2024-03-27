@@ -9,6 +9,8 @@ import UIKit
 
 open class NodeButton: NSObject, NodeLayerDelegate {
     
+    open var dynamicTouchInsets: UIEdgeInsets = .zero
+    
     open var text: String = ""
     
     open var contents: (Any & NSObject)?

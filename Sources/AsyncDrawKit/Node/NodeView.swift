@@ -9,6 +9,8 @@ import UIKit
 
 open class NodeView: NSObject, NodeLayerDelegate {
     
+    open var dynamicTouchInsets: UIEdgeInsets = .zero
+    
     open var contents: (Any & NSObject)?
     
     open var backgroundColor: UIColor = .white

@@ -7,12 +7,12 @@
 
 import UIKit
 
-let kSCREEN_WIDTH:  CGFloat = UIScreen.main.bounds.width
-let kSCREEN_HEIGHT: CGFloat = UIScreen.main.bounds.height
+internal let kSCREEN_WIDTH:  CGFloat = UIScreen.main.bounds.width
+internal let kSCREEN_HEIGHT: CGFloat = UIScreen.main.bounds.height
 
-class AsyncDrawViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+public class AsyncDrawViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         
         let tableView = UITableView()
@@ -23,11 +23,11 @@ class AsyncDrawViewController: UIViewController, UITableViewDelegate, UITableVie
         self.view.addSubview(tableView)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         50
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ASYNC", for: indexPath) as! AsyncCell
 //        cell.asyncImageView.image = UIImage(named: "font")
 //        cell.asyncImageView2.image = UIImage(named: "taylor")
@@ -35,11 +35,11 @@ class AsyncDrawViewController: UIViewController, UITableViewDelegate, UITableVie
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    public func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         100
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 20 {
             dismiss(animated: true)
         }

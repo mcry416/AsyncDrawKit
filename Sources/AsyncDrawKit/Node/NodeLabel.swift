@@ -9,6 +9,8 @@ import UIKit
 
 open class NodeLabel: NSObject, NodeLayerDelegate {
     
+    open var dynamicTouchInsets: UIEdgeInsets = .zero
+    
     open var font: UIFont = .systemFont(ofSize: 12)
     
     open var text: String = ""
