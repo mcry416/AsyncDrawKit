@@ -50,27 +50,23 @@ open class AsyncRecyclerView: UIScrollView {
     }
     
     open func reloadData() {
-        // 先移除所有子视图
+
         subviews.forEach { $0.removeFromSuperview() }
         
         guard let adapter = self.adapter else { return }
         
-        // 从代理获取行数
         let numberOfRows = adapter.numberOfRows(in: self)
         
-        // 创建和展示所有的单元格
         for row in 0..<numberOfRows {
             let indexPath = IndexPath(row: row, section: 0)
             let cell = adapter.recyclerView(self, cellForRowAt: indexPath)
             
-            // 设置单元格的frame等其他设置
             // ...
             
             addSubview(cell)
         }
     }
     
-    // 准备复用单元格：当单元格移出视图时调用
     open func prepareForReuse(cell: UIView) {
         if let reuseIdentifier = cell.reuseIdentifier {
             var cellsForReuse = reuseCells[reuseIdentifier, default: []]

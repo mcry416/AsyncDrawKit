@@ -30,6 +30,21 @@ open class SGAsyncImage: NSObject {
         cgImage = thumbnailCGImage
     }
     
+    public init?(_ image: UIImage?, size: CGSize) {
+        
+        guard let image = image else { return }
+        guard let imageRef: CGImage = image.cgImage else { return }
+        guard let colorSpaceRef: CGColorSpace = imageRef.colorSpace else { return }
+        let cgSizeW: size_t = size_t(imageRef.width)
+        let cgSizeH: size_t = size_t(imageRef.height)
+        let bitsPerComponent: size_t = 8
+        let bytePerRow: size_t = cgSizeW * 4
+        guard let context: CGContext = CGContext(data: nil, width: cgSizeW, height: cgSizeH, bitsPerComponent: bitsPerComponent, bytesPerRow: bytePerRow, space: colorSpaceRef, bitmapInfo: imageRef.bitmapInfo.rawValue) else { return }
+        context.draw(imageRef, in: .init(origin: .zero, size: CGSize(width: cgSizeW, height: cgSizeH)))
+        guard let dstCGImageRef: CGImage = context.makeImage() else { return }
+        cgImage = dstCGImageRef
+    }
+    
 }
 
 // MARK: - @syncVariable

@@ -4,50 +4,93 @@
 ![](https://img.shields.io/badge/Super%20Fast-FC180A)
 ![](https://img.shields.io/badge/Low%20Memory-8A2BE2)
 ![](https://img.shields.io/badge/Author:%20mcry416@outlook.com-FF7E30)
+
+![](https://s21.ax1x.com/2024/04/05/pFb5jsK.png)
+
  # AsyncDrawKit
 
-SGAsyncView view class that draw in sub-thread.
+Provide an async draw view component for iOS, to be your application run so fast.
 
-# How to use(SPM depency)?
+# Usage
 
-- Depency load: Xcode-> File-> Add Packages-> Input url-> `https://github.com/mcry416/AsyncDrawKit`, and waiting for fetch base.
+- Swift Package Manage: 
+
+Xcode-> File-> Add Packages-> Input url-> `https://github.com/mcry416/AsyncDrawKit`, and waiting for fetch the base.
+
+- Load the source code manually:
+
+Drag the root folder into yout project directly.
+
 - Use it as UIKit easily:
 ```
 import AsyncDrawKit
 
-lazy var asyncImageView: AsyncImageView = {
-    let imageView = AsyncImageView()
-    imageView.image = UIImage(named: "background_image")
-//  imageView.sg_setImage("https://www.test.com/test.jpg")
-    return imageView
-}()
+let imageView = AsyncImageView()
+
+// set local image
+imageView.image = UIImage(named: "background_image")
+
+// set network image
+imageView.sg_setImage("https://www.test.com/test.jpg")
+
+// use the way of downsample to set local image
+imageView.imageNamed = "background_image"
+
+// set an image where located in Bundle.
+imageView.imageFiled = "bundle_image"
 ```
 
 # Which features it has?
 
-- Async draw widget(`AsyncLabel`, `AysncImageView`).
-- Async root draw context(`NodeLabel`,`NodeImageView`,`NodeButton`).
-- Convenience `setImage` with an URL string for `AsyncImageView`.
-- High performance than UIKit in process speed,  and extremly low memory consume in specific widget size.
+- `AsyncImageView`: Provide a view that look likes `UIImageView` to load image. 
+
+The following table is a comparison between the two.
+
+|  | `AsyncImageView` | `UIImageView` |
+|-|-|-|
+| set local image | support | support |
+| set network image | support | n/a |
+| decode speed | fast | medium |
+| stable memory consume | low | high |
+| peak memory consume | high | medium |
+| image cache | support | support |
+| resolving power | auto-fit / full resolution | full resolution |
+
+- `NodeRootView`: Provide an async draw container to load various basic visual components.
+
+The following table was feature decribtion.
+
+|   | Layout  | Event  | Function  |
+|:----------|:----------|:----------|:----------|
+| NodeView    | only frame    | support   | provide a view container  |
+| NodeLabel    | only frame    | support    | provide a view to show text    |
+| NodeButton    | only frame    | support    | provide a contianer to action event    |
+| NodeImageView    | only frame    | support    | provide a view to show image    |
+
+- Memory cache and mange.
+
+You can set the cache strategy manually, or clear the cache in memory.
+
+- Others: Some functions waiting for yout to discovery.
 
 # Requirements
+
 - iOS 11+
 - Swift 5.0+
 
-# Test:
+# Test
 
 - The size of `300 * 300` for JPEG photo in UITableView, `AsyncImageView` is better perfomance than `UIImageView` in memory consume. 
 
-# Attention:
+# Attention
 
-- Do not use it into your project directly!!!
-- It may not perform as well as UIImageView at lower image resolutions.
-- This is a demo and no any verify in reality project.
-- Some issues waitting for repair.
+- It may not perform as well as `UIImageView` at lower image resolutions.
+- Do not support Objective-C environment , but you can edit the concrete class to add `ObjcMembers` to use it, it do not have any matter.
+- The reusable strategy for `AsyncImageView` has some problems in Cell when set a network image
 
-# Contact:
+# Contact
 
-- Any question or suggestions mail to me at: mcry416@outlook.com
+- Any question or suggestions mail to me at: mcry416@outlook.com 
 
 # License
 
