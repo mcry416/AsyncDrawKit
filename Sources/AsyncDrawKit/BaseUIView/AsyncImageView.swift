@@ -26,14 +26,17 @@ open class AsyncImageView: UIView, SGAsyncDelgate {
      */
     public var imageDecoderMode: ImageDecoderMode = .jpeg
     
+    @available(*, deprecated, message: "The property of `imageFiled` no longer supported. ")
     public var imageFiled: String? {
         didSet { SGALTranscation(target: self, funcPtr: #selector(drawTask)).commit() }
     }
     
+    /** Load local image where located in Bundle or document path. */
     public var imageNamed: String? {
         didSet { SGALTranscation(target: self, funcPtr: #selector(drawTask)).commit() }
     }
     
+    /** Load Assets image. The property will use the way of downsample to decode. */
     public var image: UIImage? {
         didSet { SGALTranscation(target: self, funcPtr: #selector(drawTask)).commit() }
     }

@@ -5,7 +5,9 @@
 ![](https://img.shields.io/badge/Low%20Memory-8A2BE2)
 ![](https://img.shields.io/badge/Author:%20mcry416@outlook.com-FF7E30)
 
-![](https://s21.ax1x.com/2024/04/05/pFb5jsK.png)
+<div style="text-align: center;">
+<img src="https://s21.ax1x.com/2024/04/05/pFb5jsK.png" alt="screenshot" width="192" height="192"> 
+</div>
 
  # AsyncDrawKit
 
@@ -33,11 +35,9 @@ imageView.image = UIImage(named: "background_image")
 // set network image
 imageView.sg_setImage("https://www.test.com/test.jpg")
 
-// use the way of downsample to set local image
+// use the way of downsample to set local image(Bundle image)
 imageView.imageNamed = "background_image"
 
-// set an image where located in Bundle.
-imageView.imageFiled = "bundle_image"
 ```
 
 # Which features it has?
@@ -80,7 +80,22 @@ You can set the cache strategy manually, or clear the cache in memory.
 
 # Test
 
-- The size of `300 * 300` for JPEG photo in UITableView, `AsyncImageView` is better perfomance than `UIImageView` in memory consume. 
+- The size over `1920 * 1080` for JPEG photos of 3 in UITableView, `AsyncImageView` is better performance than `UIImageView` in memory consume. 
+
+<div style="text-align: center;">
+<img src="https://s21.ax1x.com/2024/04/07/pFLi711.jpg" alt="screenshot" width="360" height="640"> 
+</div>
+
+Compare
+
+| `Property`  | `Performance`  | `Explain`  |
+|:----------|:----------|:----------|
+| AsyncImageView.image    | <img src="https://s21.ax1x.com/2024/04/07/pFLiJSI.png" alt="evidence" width="300" height="110">     | stable memory is lowest  |
+| AsyncImageView.imageNamed    | <img src="https://s21.ax1x.com/2024/04/07/pFLi8fA.png" alt="evidence" width="300" height="110">   | stable memory is less than UIImageView but high than AsyncImageView.image, however, this is a repeat image source test.     |
+| UIImageView.image    | <img src="https://s21.ax1x.com/2024/04/07/pFLi3Yd.png" alt="evidence" width="300" height="110">    | stable memory is highest. Surprisingly, CPU resource consumption is also high    |
+
+In fact, the real business scene is that image sources are abundant and non repetitive. Therefore, UIImage caching will be a burden, but AsyncImageView.image will perform well.
+
 
 # Attention
 
